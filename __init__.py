@@ -3,6 +3,8 @@ import os
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft.util.log import LOG # for logging outside of the class
 from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
+from mycroft.util.parse import match_one
+from mycroft.skills.audioservice import AudioService
 
 
 class OmaMusiikkisoitin(CommonPlaySkill):
@@ -20,15 +22,18 @@ class OmaMusiikkisoitin(CommonPlaySkill):
         library = open('/home/pomo/.config/cmus/lib.pl')
         my_songs = []
         for line in library:
-            mySongs.append(line.strip())
+            my_songs.append(line.strip())
         library.close()
 
         self.log.info(my_songs)
         
         # Get match and confidence
         match, confidence = match_one(phrase, my_songs)
+        self.log.info('match search done')
+        self.log.info('best match: {} {}'.format(match, confidence))
         # If the confidence is high enough return a match
-        if confidence > 0.5:
+        if confidence > 0.1:
+            self.log.info('match found:', match, confidence)
             return (match, CPSMatchLevel.TITLE, {"track": match})
         # Otherwise return None
         else:
@@ -48,6 +53,13 @@ class OmaMusiikkisoitin(CommonPlaySkill):
     def handle_play_something(self, message):
         self.log.info('handle_play_something activated')
         self.speak_dialog('play.something')
+        #play_random()
+        
+
+        
+        
+    def initialize(self):
+        self.audioservice = AudioService(self.bus)
         
 
 
