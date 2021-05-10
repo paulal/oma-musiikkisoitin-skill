@@ -2,7 +2,7 @@
 Plays music from local music directory
 
 ## About
-Plays music from local music directory
+Plays music from local music directory. This skill is just a bare skeleton for now, will be gradually developed. Assumes you have cmus installed, since it creates a list of music files based on the cmus library.
 
 ## Examples
 * "Play some music"
@@ -14,8 +14,8 @@ Plays music from local music directory
 paulal
 
 ## Category
-**Entertainment**
-Music & Audio
+**Music & Audio**
+Entertainment
 
 ## Tags
 #Music
